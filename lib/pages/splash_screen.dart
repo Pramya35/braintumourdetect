@@ -1,8 +1,9 @@
+import 'package:braintumourdetect/auth/auth_gate.dart';
 import 'package:flutter/material.dart';
-import 'home.dart'; // Import the home page
+// Import the home page
 
 class SplashScreen extends StatefulWidget {
-  const SplashScreen({Key? key}) : super(key: key);
+  const SplashScreen({super.key});
 
   @override
   _SplashScreenState createState() => _SplashScreenState();
@@ -15,7 +16,7 @@ class _SplashScreenState extends State<SplashScreen> {
     // Add a delay to navigate to the next page after 3 seconds
     Future.delayed(const Duration(seconds: 2), () {
       Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (_) => const Home()),
+        MaterialPageRoute(builder: (context) => const AuthGate()),
       );
     });
   }
@@ -23,14 +24,14 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 18, 28, 36), // Blue background
+      backgroundColor: const Color.fromARGB(255, 18, 28, 36), // Blue background
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             CircleAvatar(
               radius: 75, // Adjust the size of the image
-              backgroundColor: Color.fromARGB(86, 221, 213, 213),
+              backgroundColor: const Color.fromARGB(86, 221, 213, 213),
               child: ClipOval(
                 child: Image.asset(
                   'lib/images/logo.jpg', // Your logo image
@@ -40,8 +41,8 @@ class _SplashScreenState extends State<SplashScreen> {
                 ),
               ),
             ),
-            SizedBox(height: 20),
-            Text(
+            const SizedBox(height: 20),
+            const Text(
               'BRAIN CARE',
               style: TextStyle(
                 color: Color.fromARGB(255, 248, 248, 249),
@@ -49,8 +50,8 @@ class _SplashScreenState extends State<SplashScreen> {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            SizedBox(height: 10),
-            Text(
+            const SizedBox(height: 10),
+            const Text(
               'Tumour Detection App',
               style: TextStyle(
                 color: Colors.white,

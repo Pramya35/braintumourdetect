@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1044352826125",
+    "project_id": "brain-care-223e1",
+    "storage_bucket": "brain-care-223e1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1044352826125:android:f427398f4251a6521ece44",
+        "android_client_info": {
+          "package_name": "com.example.braintumourdetect"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCJ-PgkzYANi3eKLgxX8j2YZqXK5OzFI-g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

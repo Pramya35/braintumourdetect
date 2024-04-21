@@ -5,7 +5,7 @@ import 'details_screen.dart';
 class BoxWidget extends StatelessWidget {
   final String title;
 
-  const BoxWidget({Key? key, required this.title}) : super(key: key);
+  const BoxWidget({super.key, required this.title});
 
   @override
   Widget build(BuildContext context) {

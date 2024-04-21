@@ -15,15 +15,15 @@ Widget getDetailsContent(String title) {
 
 // Details for Signs & Symptoms
 class SignsAndSymptomsDetails extends StatelessWidget {
-  const SignsAndSymptomsDetails({Key? key}) : super(key: key);
+  const SignsAndSymptomsDetails({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      padding: const EdgeInsets.all(16.0),
+    return const SingleChildScrollView(
+      padding: EdgeInsets.all(16.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: const [
+        children: [
           Text(
             'Signs & Symptoms',
             style: TextStyle(
@@ -49,15 +49,15 @@ class SignsAndSymptomsDetails extends StatelessWidget {
 
 // Details for Precautions
 class PrecautionsDetails extends StatelessWidget {
-  const PrecautionsDetails({Key? key}) : super(key: key);
+  const PrecautionsDetails({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      padding: const EdgeInsets.all(16.0),
+    return const SingleChildScrollView(
+      padding: EdgeInsets.all(16.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: const [
+        children: [
           Text(
             'Precautions',
             style: TextStyle(
@@ -83,15 +83,15 @@ class PrecautionsDetails extends StatelessWidget {
 
 // Details for Treatment
 class TreatmentDetails extends StatelessWidget {
-  const TreatmentDetails({Key? key}) : super(key: key);
+  const TreatmentDetails({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      padding: const EdgeInsets.all(16.0),
+    return const SingleChildScrollView(
+      padding: EdgeInsets.all(16.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: const [
+        children: [
           Text(
             'Treatment',
             style: TextStyle(
