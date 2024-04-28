@@ -36,7 +36,7 @@ class BrainTumourDetection extends StatefulWidget {
 class _BrainTumourDetectionState extends State<BrainTumourDetection> {
   File? _imageFile;
   int _navIndex = 1;
-  int _selectedIndex = 1;
+  final int _selectedIndex = 1;
   final picker = ImagePicker();
 
   Future getImage() async {
@@ -188,7 +188,7 @@ class _BrainTumourDetectionState extends State<BrainTumourDetection> {
               GButton(
                 onPressed: () {
                   Navigator.push(context, MaterialPageRoute(builder:
-                      (context) =>  ChatBot())
+                      (context) =>  const ChatBot())
                   );
                 },
                 icon: Icons.chat_bubble,

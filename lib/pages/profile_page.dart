@@ -235,7 +235,7 @@ class _MyAccountState extends State<MyAccount> {
               GButton(
                 onPressed: () {
                   Navigator.push(context, MaterialPageRoute(builder:
-                      (context) =>  ChatBot())
+                      (context) =>  const ChatBot())
                   );
                 },
                 icon: Icons.chat_bubble,

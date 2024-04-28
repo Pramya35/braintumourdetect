@@ -5,7 +5,7 @@ import 'package:braintumourdetect/pages/profile_page.dart';
 import 'package:braintumourdetect/pages/scanner_screen.dart';
 
 class ChatBot extends StatefulWidget {
-  const ChatBot({Key? key}) : super(key: key);
+  const ChatBot({super.key});
 
   @override
   _ChatBotState createState() => _ChatBotState();
@@ -14,7 +14,7 @@ class ChatBot extends StatefulWidget {
 class _ChatBotState extends State<ChatBot> {
   final TextEditingController _controller = TextEditingController();
   int _navIndex = 2; // Add this line to track the selected tab index
-  List<String> _messages = []; // List to store messages
+  final List<String> _messages = []; // List to store messages
 
   @override
   Widget build(BuildContext context) {
