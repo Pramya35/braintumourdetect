@@ -76,7 +76,7 @@ class _HomeState extends State<Home> {
               GButton(
                 onPressed: () {
                   Navigator.push(context, MaterialPageRoute(builder:
-                      (context) =>  ChatBot())
+                      (context) =>  const ChatBot())
                   );
                 },
                 icon: Icons.chat_bubble,
