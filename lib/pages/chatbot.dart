@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:google_generative_ai/google_generative_ai.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:braintumourdetect/pages/home.dart';
 import 'package:braintumourdetect/pages/profile_page.dart';
 import 'package:braintumourdetect/pages/scanner_screen.dart';
+import 'package:intl/intl.dart';
 
 class ChatBot extends StatefulWidget {
   const ChatBot({Key? key}) : super(key: key);
@@ -12,14 +14,27 @@ class ChatBot extends StatefulWidget {
 }
 
 class _ChatBotState extends State<ChatBot> {
-  final TextEditingController _controller = TextEditingController();
-  int _navIndex = 2; // Add this line to track the selected tab index
-  List<String> _messages = []; // List to store messages
+  final TextEditingController _userInput = TextEditingController();
+  static const apiKey = "AIzaSyD28WUHrOBFqBhJ0CYd5hxDUTHo6RBfEaI";
+  final model = GenerativeModel(model: 'gemini-pro', apiKey: apiKey);
+  final List<Message> _messages = [];
+  int _navIndex = 0;
+
+  Future<void> sendMessage() async {
+    final message = _userInput.text;
+    setState(() {
+      _messages.add(Message(isUser: true, message: message, date: DateTime.now()));
+    });
+    final content = [Content.text(message)];
+    final response = await model.generateContent(content);
+    setState(() {
+      _messages.add(Message(isUser: false, message: response.text ?? "", date: DateTime.now()));
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: AppBar(
         centerTitle: true,
         title: const Text('Mind Mentor'),
@@ -37,61 +52,58 @@ class _ChatBotState extends State<ChatBot> {
         ),
       ),
       body: Container(
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           image: DecorationImage(
+            colorFilter: ColorFilter.mode(Colors.black.withOpacity(0.8), BlendMode.dstATop),
             image: AssetImage('lib/images/bg.png'),
-            fit: BoxFit.fitWidth,
-            opacity: 0.8,
           ),
         ),
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            // Display messages
             Expanded(
               child: ListView.builder(
                 itemCount: _messages.length,
                 itemBuilder: (context, index) {
-                  return ListTile(
-                    title: Text(_messages[index]),
+                  final message = _messages[index];
+                  return Messages(
+                    isUser: message.isUser,
+                    message: message.message,
+                    date: DateFormat('HH:mm').format(message.date),
                   );
                 },
               ),
             ),
-            const SizedBox(height: 20),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [
-                    const Color.fromARGB(90, 120, 157, 195).withOpacity(0.8),
-                    const Color.fromARGB(255, 21, 73, 90).withOpacity(0.8),
-                  ],
-                ),
-              ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
               child: Row(
                 children: [
                   Expanded(
-                    child: TextField(
-                      controller: _controller,
-                      style: const TextStyle(color: Colors.white),
-                      decoration: const InputDecoration(
-                        border: InputBorder.none,
-                        hintText: 'Type a message...',
-                        hintStyle: TextStyle(
-                          color: Colors.white54,
-                          fontFamily: 'Cera Pro',
+                    flex: 15,
+                    child: TextFormField(
+                      style: TextStyle(color: Colors.black),
+                      controller: _userInput,
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(15),
                         ),
+                        label: Text('Enter Your Message'),
                       ),
                     ),
                   ),
+                  Spacer(),
                   IconButton(
+                    padding: EdgeInsets.all(12),
+                    iconSize: 30,
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all(Colors.black),
+                      foregroundColor: MaterialStateProperty.all(Colors.white),
+                      shape: MaterialStateProperty.all(CircleBorder()),
+                    ),
                     onPressed: () {
-                      _sendMessage(_controller.text);
+                      sendMessage();
                     },
-                    icon: const Icon(Icons.send_rounded),
-                    color: Colors.white,
+                    icon: Icon(Icons.send),
                   ),
                 ],
               ),
@@ -100,9 +112,12 @@ class _ChatBotState extends State<ChatBot> {
         ),
       ),
       bottomNavigationBar: Container(
-        decoration: BoxDecoration(color: Colors.white, boxShadow: [
-          BoxShadow(blurRadius: 20, color: Colors.black.withOpacity(.1))
-        ]),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          boxShadow: [
+            BoxShadow(blurRadius: 20, color: Colors.black.withOpacity(.1))
+          ],
+        ),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 8),
           child: GNav(
@@ -123,16 +138,14 @@ class _ChatBotState extends State<ChatBot> {
               ),
               GButton(
                 onPressed: () {
-                  // Navigator.push(context, MaterialPageRoute(builder:
-                  //     (context) =>  ChatBot())
-                  // );
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => const ChatBot()));
                 },
                 icon: Icons.chat_bubble,
                 text: 'Chat',
               ),
               GButton(
                 onPressed: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => const MyAccount()));
+                  // Navigator.push(context, MaterialPageRoute(builder: (context) => const MyAccount()));
                 },
                 icon: Icons.person,
                 text: 'Profile',
@@ -149,12 +162,56 @@ class _ChatBotState extends State<ChatBot> {
       ),
     );
   }
+}
 
-  // Function to send a message
-  void _sendMessage(String message) {
-    setState(() {
-      _messages.add(message); // Add the message to the list
-    });
-    _controller.clear(); // Clear the text field after sending the message
+class Message {
+  final bool isUser;
+  final String message;
+  final DateTime date;
+  Message({required this.isUser, required this.message, required this.date});
+}
+
+class Messages extends StatelessWidget {
+  final bool isUser;
+  final String message;
+  final String date;
+  const Messages({
+    super.key,
+    required this.isUser,
+    required this.message,
+    required this.date,
+  });
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      padding: EdgeInsets.all(15),
+      margin: EdgeInsets.symmetric(vertical: 15).copyWith(
+        left: isUser ? 100 : 10,
+        right: isUser ? 10 : 100,
+      ),
+      decoration: BoxDecoration(
+        color: isUser ? Colors.blueAccent : Colors.grey.shade400,
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(10),
+          bottomLeft: isUser ? Radius.circular(10) : Radius.zero,
+          topRight: Radius.circular(10),
+          bottomRight: isUser ? Radius.zero : Radius.circular(10),
+        ),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            message,
+            style: TextStyle(fontSize: 16, color: isUser ? Colors.white : Colors.black),
+          ),
+          Text(
+            date,
+            style: TextStyle(fontSize: 10, color: isUser ? Colors.white : Colors.black),
+          ),
+        ],
+      ),
+    );
   }
 }

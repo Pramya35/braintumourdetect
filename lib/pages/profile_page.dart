@@ -44,13 +44,20 @@ class _MyAccountState extends State<MyAccount> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          "My Account",
-          style: GoogleFonts.lato(
-            fontWeight: FontWeight.bold,
+        centerTitle: true,
+        title: const Text('My Account'),
+        flexibleSpace: Container(
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [
+                Color.fromARGB(120, 146, 187, 227),
+                Color.fromARGB(255, 28, 115, 142),
+              ],
+            ),
           ),
         ),
-        backgroundColor: Colors.white,
       ),
       body: Padding(
         padding: const EdgeInsets.all(30),
@@ -199,6 +206,12 @@ class _MyAccountState extends State<MyAccount> {
                         ),
                       ),
                     ],
+                  ),
+                  IconButton(
+                    onPressed: () {
+                      _authService.signOut();
+                    }, icon: Icon(Icons.logout),
+
                   ),
                 ],
               ),

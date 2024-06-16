@@ -4,7 +4,6 @@ import 'package:braintumourdetect/pages/profile_page.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:image_picker/image_picker.dart';
-
 import 'chatbot.dart';
 
 void main() {
@@ -55,15 +54,45 @@ class _BrainTumourDetectionState extends State<BrainTumourDetection> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         title: const Text('Brain Tumour Detection'),
+        flexibleSpace: Container(
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [
+                Color.fromARGB(120, 146, 187, 227),
+                Color.fromARGB(255, 28, 115, 142),
+              ],
+            ),
+          ),
+        ),
       ),
       body: Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
+            const Padding(
+              padding: EdgeInsets.only(top: 30.0,left: 15.0),
+              child: Text(
+                  'A Multi-class Brain Tumour Classifier using Convolutional Neural Network',
+                style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.indigo
+                ),
+              ),
+            ),
+
+            const SizedBox(height: 150,),
             const Text(
               'Upload the MRI image',
-              style: TextStyle(fontSize: 20.0),
+              style: TextStyle(
+                  fontSize: 25.0,
+                fontWeight: FontWeight.bold,
+                  color: Colors.indigo
+              ),
             ),
             const SizedBox(height: 20.0),
             GestureDetector(
